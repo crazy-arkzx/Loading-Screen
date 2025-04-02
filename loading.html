@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: Arial, sans-serif; background: #0f0f1a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden;}
+        .loading-container {position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; background: #0f0f1a; z-index: 9999; transition: opacity 0.5s;}
+        .loading-spinner {width: 80px; height: 80px; display: flex; justify-content: center; align-items: center; position: relative;}
+        .loading-spinner div {position: absolute; width: 64px; height: 64px; border: 6px solid transparent; border-top-color: #4F46E5; border-radius: 50%; animation: spin 1.2s linear infinite;}
+        .loading-spinner div:nth-child(2) {animation-delay: -0.3s;}
+        .loading-spinner div:nth-child(3) {animation-delay: -0.15s;}
+        .loading-text {font-size: 18px; letter-spacing: 2px; margin: 10px 0; text-align: center;}
+        .dots::after {content: ''; animation: dots 1.5s infinite;}
+        .progress-container {width: 80%; max-width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden;}
+        .progress-bar {height: 100%; width: 0; background: linear-gradient(90deg, #4F46E5, #8B5CF6); transition: width 0.4s;}
+        .fade-out {opacity: 0; pointer-events: none;}
+        @keyframes spin {0% {transform: rotate(0);} 100% {transform: rotate(360deg);}}
+        @keyframes dots {0% {content: '';} 25% {content: '.';} 50% {content: '..';} 75% {content: '...';} 100% {content: '';}}
+    </style>
+</head>
+<body>
+    <div class="loading-container" id="loadingScreen">
+        <div class="loading-spinner"><div></div><div></div><div></div></div>
+        <div class="loading-text">CARREGANDO<span class="dots"></span></div>
+        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let width = 0, bar = document.getElementById('progressBar');
+            let interval = setInterval(() => {
+                if (width >= 100) {clearInterval(interval); setTimeout(() => window.location.href = 'sua/pasta/aqui.html', 500);}
+                else {width += (100 - width) / 20 + 0.5; bar.style.width = width + '%';}
+            }, 100);
+        });
+    </script>
+</body>
+</html>
